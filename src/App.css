@@ -8,7 +8,7 @@
 }
 
 .layout__navbar {
-  background-color: #777;
+  background-color: #4B2F94;
   padding: 1rem 0;
 }
 
@@ -22,7 +22,7 @@
 }
 
 .layout__navbar a.active {
-  background-color: #222;
+  background-color: #311E60;
 }
 
 .layout__content {

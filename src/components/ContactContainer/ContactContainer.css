@@ -13,3 +13,41 @@
 .content__see-contacts {
   display: grid;
 }
+
+.info__wrapper {
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 256px);
+  gap: 1rem;
+}
+
+.info__wrapper a {
+  color: white;
+  text-decoration: none;
+}
+
+.info__card {
+  height: 3.5rem;
+  width: 16rem;
+  border: 1px solid #555;
+  padding: 1rem 0;
+  cursor: pointer;
+  transition: all 0.2s linear;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.info__card > svg {
+  transition: all 0.1s linear;
+  color: #8C71D2;
+}
+
+.info__card:hover {
+  box-shadow: 3px 3px 1px #4B2F94;
+}
+
+.info__card:hover > svg {
+  transform: translateX(5px);
+}

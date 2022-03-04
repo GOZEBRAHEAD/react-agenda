@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, NavLink, Switch } from 'react-router-do
 
 import { useState } from 'react';
 
+import Contact from './components/Contact/Contact';
 import ContactContainer from './components/ContactContainer/ContactContainer';
 import AppointmentContainer from './components/AppointmentContainer/AppointmentContainer';
 
@@ -42,6 +43,12 @@ function App() {
               <h1>Welcome to the agenda!</h1>
               <h4>Made by Luciano Nieves</h4>
               <p>Check it out adding some contacts or appointments :)</p>
+            </Route>
+
+            <Route path='/contacts/:name'>
+              <Contact
+                contacts={contacts}
+              />
             </Route>
 
             <Route path='/contacts'>

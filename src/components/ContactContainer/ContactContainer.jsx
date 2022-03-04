@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import { Route, Link } from 'react-router-dom';
 
 import './ContactContainer.css';
 
@@ -74,14 +75,6 @@ const ContactContainer = ({ contacts, addContacts }) => {
             required
           />
 
-          {/* <select name="contactSocialType">
-            <option value="-" key={-1} defaultValue="selected">-</option>
-            <option value="friend">Friend</option>
-            <option value="family">Family</option>
-            <option value="coworker">Coworker</option>
-            <option value="partner">Partner</option>
-          </select> */}
-
           <input type="submit" value="Submit" />
           
         </form>
@@ -90,18 +83,30 @@ const ContactContainer = ({ contacts, addContacts }) => {
       <section className='content__see-contacts'>
         <h3>Your contacts:</h3>
 
-        <div>
-        {
-          contacts.map((actualContact, i) => {
-          
-          return <div key={i}>
-              <p>Name: {actualContact.name}</p> 
-              <p>E-mail: {actualContact.email}</p>
-              <p>Type: {actualContact.socialType}</p>
-              <br />
-            </div>
-          })
-        }
+        <div className='info__wrapper'>
+
+          <Route>            
+            {
+              contacts.map((actualContact, i) => {
+              
+                return (
+                  <Link key={i} to={`/contacts/${actualContact.name}`}>
+                    <div key={i} className='info__card'>
+                      
+                      <p>{actualContact.name}</p>
+
+                      <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-arrow-big-right-line" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M12 9v-3.586a1 1 0 0 1 1.707 -.707l6.586 6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-6v-6h6z"></path>
+                        <path d="M3 9v6"></path>
+                      </svg>
+                    </div>
+                  </Link>
+                )
+              })
+            }
+          </Route>
+
         </div>
       </section>
 
