@@ -1,0 +1,15 @@
+.content__create-contacts {  
+  display: grid;
+  place-content: center;
+}
+
+.content__create-contacts form {
+  display: flex;
+  align-items: flex-start;
+
+  flex-direction: column;
+}
+
+.content__see-contacts {
+  display: grid;
+}

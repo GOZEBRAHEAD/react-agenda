@@ -1,0 +1,15 @@
+.content__create-appointments {  
+  display: grid;
+  place-content: center;
+}
+
+.content__create-appointments form {
+  display: flex;
+  align-items: flex-start;
+
+  flex-direction: column;
+}
+
+.content__see-appointments {
+  display: grid;
+}
