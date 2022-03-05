@@ -1,18 +1,31 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Route, Link } from 'react-router-dom';
+
+import { verifyDuplicateAppointment } from '../../utils/func_utils.js';
 
 import './AppointmentContainer.css';
 
-const AppointmentContainer = ({ contacts, appointments, addAppointments }) => {
+const AppointmentContainer = ({ contacts, appointments, addAppointments, setAppointments }) => {
 
   const [title, setTitle] = useState('');
   const [contact, setContact] = useState(contacts.length > 0 ? contacts[0].name : '');
   const [date, setDate] = useState('');
   const [importance, setImportance] = useState('');
+  const [duplicate, setDuplicate] = useState(false);
+
+  useEffect(() => {
+
+    setDuplicate(verifyDuplicateAppointment(appointments, title));
+
+  }, [appointments, title]);
 
   const handleSubmitAppointment = (e) => {
     e.preventDefault();
+
+    if (!contact || !importance || duplicate) {
+      return;
+    }
 
     addAppointments(title, contact, date, importance);
 
@@ -38,90 +51,110 @@ const AppointmentContainer = ({ contacts, appointments, addAppointments }) => {
     setImportance(e.target.value);
   }
 
+  const handleDelete = (id) => {
+    
+    const updatedAppointments = appointments.filter(actualAp => actualAp.id !== id);
+
+    setAppointments(updatedAppointments);
+  }
+
   return (
     
     <>
 
       <h2>Appointments</h2>
+      { duplicate && <p>Appointment already exists</p>}
 
-      <section className='content__create-appointments'>
-        <form onSubmit={handleSubmitAppointment}>
+      <div className='content__wrapper'>
 
-          <label htmlFor="appointmentTitle">Title:</label>
-          <input
-            type="text"
-            min="2"
-            max="25"
-            placeholder="Title"
-            name="appointmentTitle"
-            value={title}
-            onChange={handleChangeTitle}
-            required
-          />
+        <section className='content__create-appointments'>
+          <form onSubmit={handleSubmitAppointment}>
 
-          <label htmlFor="appointmentContact">Contact:</label>
-          <select name="appointmentContact" onChange={handleChangeContact}>
-            <option value="-" key={-1} defaultValue="selected">No contact selected</option>
+            <label htmlFor="appointmentTitle">Title:</label>
+            <input
+              type="text"
+              min="2"
+              max="25"
+              placeholder="Title"
+              name="appointmentTitle"
+              value={title}
+              onChange={handleChangeTitle}
+              required
+            />
+
+            <label htmlFor="appointmentContact">Contact:</label>
+            <select name="appointmentContact" onChange={handleChangeContact}>
+              <option value="" key={-1} defaultValue="selected">No contact selected</option>
+              {
+                contacts.map((actualContact, i) => {
+
+                  return (
+                    <option key={i} value={actualContact.name}>{actualContact.name}</option>
+                  )
+                })
+              }
+            </select>
+
+            <label htmlFor="appointmentDate">Date:</label>
+            <input
+              type="date"
+              name="appointmentDate"
+              value={date}
+              onChange={handleChangeDate}
+              required
+            />
+            
+            <label htmlFor="appointmentImportance">Importance:</label>
+            <select name="appointmentImportance" onChange={handleChangeImportance}>
+              <option value="" key={-1} defaultValue="selected">-</option>
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+            </select>
+
+            <input className='submit-button' type="submit" value="Add appointment" />
+            
+          </form>
+        </section>
+
+        <section className='content__see-appointments'>
+          <h3>Your appointments:</h3>
+
+          <div className='info__wrapper'>
+
+            <Route>
             {
-              contacts.map((actualContact, i) => {
-
-                return (
-                  <option key={i} value={actualContact.name}>{actualContact.name}</option>
-                )
-              })
-            }
-          </select>
-
-          <label htmlFor="appointmentDate">Date:</label>
-          <input
-            type="date"
-            name="appointmentDate"
-            value={date}
-            onChange={handleChangeDate}
-            required
-          />
-          
-          <label htmlFor="appointmentImportance">Importance:</label>
-          <select name="appointmentImportance" onChange={handleChangeImportance}>
-            <option value="Low" key={-1} defaultValue="selected">Low</option>
-            <option value="Medium">Medium</option>
-            <option value="High">High</option>
-          </select>
-
-          <input type="submit" value="Add appointment" />
-          
-        </form>
-      </section>
-
-      <section className='content__see-appointments'>
-        <h3>Your appointments:</h3>
-
-        <div className='info__wrapper'>
-
-          <Route>            
-            {
-              appointments.map((actualAppointment, i) => {
+              appointments.map(actualAppointment => {
               
                 return (
-                  <Link key={i} to={`/appointments/${actualAppointment.title}`}>
-                    <div key={i} className='info__card'>
-                      
-                      <p>{actualAppointment.title}</p>
+                  <div key={actualAppointment.id} className='info__card'>
+                    
+                    <Link to={`/appointments/${actualAppointment.id}`}>
+                      <div className='card__text'>
+                        <p>{actualAppointment.title}</p>
+                      </div>
+                    </Link>
 
-                      <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-arrow-big-right-line" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                    <div onClick={() => handleDelete(actualAppointment.id)} className='card__delete'>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M12 9v-3.586a1 1 0 0 1 1.707 -.707l6.586 6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-6v-6h6z"></path>
-                        <path d="M3 9v6"></path>
+                        <line x1="4" y1="7" x2="20" y2="7"></line>
+                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                        <line x1="14" y1="11" x2="14" y2="17"></line>
+                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
                       </svg>
                     </div>
-                  </Link>
+                  </div>
                 )
               })
             }
-          </Route>
+            </Route>
 
-        </div>
-      </section>
+          </div>
+        </section>
+
+      </div>
 
     </>
     

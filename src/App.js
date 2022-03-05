@@ -1,6 +1,12 @@
 import { BrowserRouter as Router, Route, NavLink, Switch, Redirect } from 'react-router-dom';
-
 import { useState, useEffect } from 'react';
+
+import {
+  saveContactsInLocalStorage, getContactsFromLocalStorage,
+  saveAppointmentsInLocalStorage, getAppointmentsFromLocalStorage
+} from './utils/local-storage.js';
+
+import { calculateIdFromArray } from './utils/func_utils.js';
 
 import Contact from './components/Contact/Contact';
 import ContactContainer from './components/ContactContainer/ContactContainer';
@@ -8,15 +14,6 @@ import AppointmentContainer from './components/AppointmentContainer/AppointmentC
 import Appointment from './components/Appointment/Appointment';
 
 import './App.css';
-
-const LOCALSTORAGE_CONTACTS = 'react-agenda-contacts';
-const LOCALSTORAGE_APPOINTMENTS = 'react-agenda-appointments';
-
-const saveContactsInLocalStorage = (cont) => localStorage.setItem(LOCALSTORAGE_CONTACTS, JSON.stringify(cont));
-const getContactsFromLocalStorage = () => JSON.parse(localStorage.getItem(LOCALSTORAGE_CONTACTS));
-
-const saveAppointmentsInLocalStorage = (appoint) => localStorage.setItem(LOCALSTORAGE_APPOINTMENTS, JSON.stringify(appoint));
-const getAppointmentsFromLocalStorage = () => JSON.parse(localStorage.getItem(LOCALSTORAGE_APPOINTMENTS));
 
 function App() {
 
@@ -32,12 +29,16 @@ function App() {
 
   const addContacts = (name, email, socialType) => {
 
-    setContacts(prevContacts => [...prevContacts, { name, email, socialType }]);    
+    const id = calculateIdFromArray(contacts);
+
+    setContacts(prevContacts => [...prevContacts, { id, name, email, socialType } ]);    
   }
 
   const addAppointments = (title, contact, date, importance) => {
 
-    setAppointments(prevAppointments => [...prevAppointments, { title, contact, date, importance }]);
+    const id = calculateIdFromArray(appointments);
+
+    setAppointments(prevAppointments => [...prevAppointments, { id, title, contact, date, importance }]);
   }
 
   return (
@@ -62,7 +63,7 @@ function App() {
               <p>Check it out adding some contacts or appointments :)</p>
             </Route>
 
-            <Route path='/contacts/:name'>
+            <Route path='/contacts/:id'>
               {
                 (contacts.length === 0) ? 
                   <Redirect to='/contacts' />
@@ -75,10 +76,11 @@ function App() {
               <ContactContainer
                 contacts={contacts}
                 addContacts={addContacts}
+                setContacts={setContacts}
               />
             </Route>
 
-            <Route path='/appointments/:title'>
+            <Route path='/appointments/:id'>
               {
                 (appointments.length === 0) ? 
                   <Redirect to='/appointments' />
@@ -92,6 +94,7 @@ function App() {
                 contacts={contacts}
                 appointments={appointments}
                 addAppointments={addAppointments}
+                setAppointments={setAppointments}
               />
             </Route>
 

@@ -3,20 +3,18 @@ import { useParams } from 'react-router-dom';
 
 const Contact = ({ contacts }) => {
 
-  const { name } = useParams();
+  const { id } = useParams();
 
-  if (!name || contacts.length === 0) {
+  if (!id || contacts.length === 0) {
 
     return (
       <h2>Contact not found :(</h2>
     );
   }
 
-  const getContactFromName = () => {
-    return contacts.find(actualContact => actualContact.name === name);
-  }
+  const getContactFromID = () => contacts.find(actualContact => actualContact.id === +id);
 
-  const selectedContact = getContactFromName();
+  const selectedContact = getContactFromID();
 
   return (
 

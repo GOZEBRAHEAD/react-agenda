@@ -1,53 +1,42 @@
-.content__create-contacts {  
+.content__create-contacts {
   display: grid;
-  place-content: center;
 }
 
 .content__create-contacts form {
-  display: flex;
-  align-items: flex-start;
+  margin: auto;
 
+  display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.content__create-contacts form input {
+  width: 16rem;
+  padding: 0.35rem 0.5rem;
+  border: none;
+  margin-top: 0.25rem;
+  margin-bottom: 1.5rem;
+
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.content__create-contacts form input:focus {
+  outline: none;
+}
+
+.content__create-contacts form .submit-button {
+  height: 2rem;
+  width: 80%;
+  margin-top: 2rem;
+  cursor: pointer;
+  font-family: sans-serif;
 }
 
 .content__see-contacts {
+  height: 100%;
+  width: 45%;
+  
   display: grid;
-}
-
-.info__wrapper {
-
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 256px);
-  gap: 1rem;
-}
-
-.info__wrapper a {
-  color: white;
-  text-decoration: none;
-}
-
-.info__card {
-  height: 3.5rem;
-  width: 16rem;
-  border: 1px solid #555;
-  padding: 1rem 0;
-  cursor: pointer;
-  transition: all 0.2s linear;
-
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.info__card > svg {
-  transition: all 0.1s linear;
-  color: #8C71D2;
-}
-
-.info__card:hover {
-  box-shadow: 3px 3px 1px #4B2F94;
-}
-
-.info__card:hover > svg {
-  transform: translateX(5px);
+  grid-template-rows: 5rem 1fr;
 }

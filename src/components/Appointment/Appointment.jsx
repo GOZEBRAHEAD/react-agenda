@@ -3,20 +3,20 @@ import { useParams } from 'react-router-dom';
 
 const Appointment = ({ appointments }) => {
 
-  const { title } = useParams();
+  const { id } = useParams();
 
-  if (!title || appointments.length === 0) {
+  if (!id || appointments.length === 0) {
 
     return (
       <h2>Appointments not found :(</h2>
     );
   }
 
-  const getAppointmentFromTitle = () => {
-    return appointments.find(actualAppointment => actualAppointment.title === title);
+  const getAppointmentFromID = () => {
+    return appointments.find(actualAppointment => actualAppointment.id === +id);
   }
 
-  const selectedAppointment = getAppointmentFromTitle();
+  const selectedAppointment = getAppointmentFromID();
 
   return (
 
