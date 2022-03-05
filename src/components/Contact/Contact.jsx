@@ -5,19 +5,28 @@ const Contact = ({ contacts }) => {
 
   const { name } = useParams();
 
-  const getContactFromName = (contactName) => {
-    return contacts.find(actualContact => actualContact.name === contactName);
+  if (!name || contacts.length === 0) {
+
+    return (
+      <h2>Contact not found :(</h2>
+    );
   }
 
-  const contact = getContactFromName(name);
+  const getContactFromName = () => {
+    return contacts.find(actualContact => actualContact.name === name);
+  }
+
+  const selectedContact = getContactFromName();
 
   return (
 
-    <div>
-      <h2>{ contact.name }</h2>
-      <h3>{ contact.email }</h3>
-      <h3>{ contact.socialType }</h3>
-    </div>
+    <>
+      <div>
+        <h2>{ selectedContact.name }</h2>
+        <h3>{ selectedContact.email }</h3>
+        <h3>{ selectedContact.socialType }</h3>
+      </div>
+    </>
   );
 }
 

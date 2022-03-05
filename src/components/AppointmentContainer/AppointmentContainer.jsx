@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import { Route, Link } from 'react-router-dom';
 
 import './AppointmentContainer.css';
 
@@ -65,7 +66,7 @@ const AppointmentContainer = ({ contacts, appointments, addAppointments }) => {
               contacts.map((actualContact, i) => {
 
                 return (
-                  <option key={i} value={actualContact}>{actualContact.name}</option>
+                  <option key={i} value={actualContact.name}>{actualContact.name}</option>
                 )
               })
             }
@@ -80,8 +81,8 @@ const AppointmentContainer = ({ contacts, appointments, addAppointments }) => {
             required
           />
           
-          <label htmlFor="appointmentImportance" onChange={handleChangeImportance}>Importance:</label>
-          <select name="appointmentImportance">
+          <label htmlFor="appointmentImportance">Importance:</label>
+          <select name="appointmentImportance" onChange={handleChangeImportance}>
             <option value="Low" key={-1} defaultValue="selected">Low</option>
             <option value="Medium">Medium</option>
             <option value="High">High</option>
@@ -95,19 +96,30 @@ const AppointmentContainer = ({ contacts, appointments, addAppointments }) => {
       <section className='content__see-appointments'>
         <h3>Your appointments:</h3>
 
-        <div>
-        {
-          appointments.map((actualAppointment, i) => {
-          
-          return <div key={i}>
-              <p>Title: {actualAppointment.title}</p> 
-              <p>Contact: {actualAppointment.contact}</p>
-              <p>Date: {actualAppointment.date}</p>
-              <p>Importance: {actualAppointment.importance}</p>
-              <br />
-            </div>
-          })
-        }
+        <div className='info__wrapper'>
+
+          <Route>            
+            {
+              appointments.map((actualAppointment, i) => {
+              
+                return (
+                  <Link key={i} to={`/appointments/${actualAppointment.title}`}>
+                    <div key={i} className='info__card'>
+                      
+                      <p>{actualAppointment.title}</p>
+
+                      <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-arrow-big-right-line" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M12 9v-3.586a1 1 0 0 1 1.707 -.707l6.586 6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-6v-6h6z"></path>
+                        <path d="M3 9v6"></path>
+                      </svg>
+                    </div>
+                  </Link>
+                )
+              })
+            }
+          </Route>
+
         </div>
       </section>
 
