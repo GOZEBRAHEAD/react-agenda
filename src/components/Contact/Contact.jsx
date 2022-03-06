@@ -1,29 +1,37 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 const Contact = ({ contacts }) => {
 
   const { id } = useParams();
 
-  if (!id || contacts.length === 0) {
+  const history = useHistory();
 
-    return (
-      <h2>Contact not found :(</h2>
-    );
+  const handleGoBack = () => {
+    history.push('/contacts/');
   }
 
-  const getContactFromID = () => contacts.find(actualContact => actualContact.id === +id);
+  const getContactFromID = () => {
+    return contacts.find(actualContact => actualContact.id === +id);
+  }
 
   const selectedContact = getContactFromID();
 
   return (
 
     <>
-      <div>
-        <h2>{ selectedContact.name }</h2>
-        <h3>{ selectedContact.email }</h3>
-        <h3>{ selectedContact.socialType }</h3>
-      </div>
+      {
+      (!selectedContact || contacts.length === 0) ?
+        <h2>You don't have any contacts :(</h2>
+        :
+        <div className='specific-info'>
+          <h2>{ selectedContact.name }</h2>
+          <h3>E-mail: { selectedContact.email }</h3>
+          <h3>Type: { selectedContact.socialType }</h3>
+        </div>
+      }
+
+      <button className='button-back' onClick={handleGoBack}>Go back</button>
     </>
   );
 }

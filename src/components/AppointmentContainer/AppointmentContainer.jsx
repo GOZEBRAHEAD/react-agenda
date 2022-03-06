@@ -1,8 +1,11 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route, Link, useHistory } from 'react-router-dom';
 
-import { verifyDuplicateAppointment } from '../../utils/func_utils.js';
+import {
+  verifyDuplicateAppointment,
+  calculateIdFromArray
+} from '../../utils/func_utils.js';
 
 import './AppointmentContainer.css';
 
@@ -13,6 +16,8 @@ const AppointmentContainer = ({ contacts, appointments, addAppointments, setAppo
   const [date, setDate] = useState('');
   const [importance, setImportance] = useState('');
   const [duplicate, setDuplicate] = useState(false);
+
+  const history = useHistory();  
 
   useEffect(() => {
 
@@ -33,6 +38,12 @@ const AppointmentContainer = ({ contacts, appointments, addAppointments, setAppo
     setContact('');
     setDate('');
     setImportance('');
+
+    const newIdAppointment = calculateIdFromArray(appointments);
+
+    if (newIdAppointment) {
+      history.push(`/appointments/${newIdAppointment}`);
+    }
   }
 
   const handleChangeTitle = (e) => {
@@ -62,8 +73,7 @@ const AppointmentContainer = ({ contacts, appointments, addAppointments, setAppo
     
     <>
 
-      <h2>Appointments</h2>
-      { duplicate && <p>Appointment already exists</p>}
+      <h2>Appointments { duplicate && "- duplicated appointment" }</h2>
 
       <div className='content__wrapper'>
 
@@ -84,7 +94,7 @@ const AppointmentContainer = ({ contacts, appointments, addAppointments, setAppo
 
             <label htmlFor="appointmentContact">Contact:</label>
             <select name="appointmentContact" onChange={handleChangeContact}>
-              <option value="" key={-1} defaultValue="selected">No contact selected</option>
+              <option value="" defaultValue="selected">No contact selected</option>
               {
                 contacts.map((actualContact, i) => {
 
@@ -106,7 +116,7 @@ const AppointmentContainer = ({ contacts, appointments, addAppointments, setAppo
             
             <label htmlFor="appointmentImportance">Importance:</label>
             <select name="appointmentImportance" onChange={handleChangeImportance}>
-              <option value="" key={-1} defaultValue="selected">-</option>
+              <option value="" defaultValue="selected">-</option>
               <option value="Low">Low</option>
               <option value="Medium">Medium</option>
               <option value="High">High</option>

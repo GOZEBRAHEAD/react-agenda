@@ -32,6 +32,35 @@
   flex-direction: column;
 }
 
+.specific-info {
+  height: 60%;
+  width: 50%;
+  min-width: 30rem;
+  text-align: center;
+  padding: 2rem;
+  place-self: center;
+  outline: 1px solid #8C71D2;
+  box-shadow: 7px 7px 1px #4B2F94;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+
+.specific-info h3 {
+  place-self: center;
+}
+
+.layout__content h2 {
+  height: 3rem;
+  width: fit-content;
+  place-self: center;
+  text-align: center;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #8C71D2;
+}
+
 .content__hero {
   height: 100%;
 
@@ -69,12 +98,9 @@
   width: 2.5rem;
 }
 
-.layout__content h2 {
-  height: 3rem;
-}
-
 .content__wrapper {
   height: 100%;
+  padding: 1rem 0;
 
   display: flex;
   justify-content: space-evenly;
@@ -82,7 +108,7 @@
 }
 
 .info__wrapper {
-  height: 22rem;
+  height: 20rem;
   overflow: auto;
 
   display: grid;
@@ -133,6 +159,24 @@
 
 .info__card:hover {
   box-shadow: 3px 3px 1px #3f277a;
+}
+
+.button-back {
+  height: 2.25rem;
+  width: 6rem;
+  color: white;
+  background-color: #4B2F94;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  margin-top: 5rem;
+  place-self: center;
+  transition: all 0.15s linear;
+}
+
+.button-back:hover {
+  background-color: #3f277a;
 }
 
 @media only screen and (max-width: 700px) {

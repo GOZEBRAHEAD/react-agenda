@@ -1,15 +1,14 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 const Appointment = ({ appointments }) => {
 
   const { id } = useParams();
 
-  if (!id || appointments.length === 0) {
+  const history = useHistory();
 
-    return (
-      <h2>Appointments not found :(</h2>
-    );
+  const handleGoBack = () => {
+    history.push('/appointments/');
   }
 
   const getAppointmentFromID = () => {
@@ -21,12 +20,19 @@ const Appointment = ({ appointments }) => {
   return (
 
     <>
-      <div>
-        <h2>{ selectedAppointment.title }</h2>
-        <h3>{ selectedAppointment.contact }</h3>
-        <h3>{ selectedAppointment.date }</h3>
-        <h3>{ selectedAppointment.importance }</h3>
-      </div>
+      {
+        (!selectedAppointment || appointments.length === 0) ?
+          <h2>You don't have any appointments :(</h2>
+          :
+          <div className='specific-info'>
+            <h2>{ selectedAppointment.title }</h2>
+            <h3>Contact: { selectedAppointment.contact }</h3>
+            <h3>Date: { selectedAppointment.date }</h3>
+            <h3>Importance: { selectedAppointment.importance }</h3>
+          </div>
+      }
+
+      <button className='button-back' onClick={handleGoBack}>Go back</button>
     </>
   );
 }

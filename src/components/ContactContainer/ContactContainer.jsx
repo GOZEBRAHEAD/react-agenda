@@ -1,8 +1,11 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route, Link, useHistory } from 'react-router-dom';
 
-import { verifyDuplicateContact } from '../../utils/func_utils.js';
+import {
+  verifyDuplicateContact,
+  calculateIdFromArray
+} from '../../utils/func_utils.js';
 
 import './ContactContainer.css';
 
@@ -12,6 +15,8 @@ const ContactContainer = ({ contacts, addContacts, setContacts }) => {
   const [email, setEmail] = useState('');
   const [socialType, setSocialType] = useState('');
   const [duplicate, setDuplicate] = useState(false);
+
+  const history = useHistory();
 
   useEffect(() => {
 
@@ -31,6 +36,12 @@ const ContactContainer = ({ contacts, addContacts, setContacts }) => {
     setName('');
     setEmail('');
     setSocialType('');
+
+    const newIdContact = calculateIdFromArray(contacts);
+
+    if (newIdContact) {
+      history.push(`/contacts/${newIdContact}`);
+    }
   }
 
   const handleChangeName = (e) => {
@@ -56,8 +67,7 @@ const ContactContainer = ({ contacts, addContacts, setContacts }) => {
     
     <>
     
-      <h2>Contacts</h2>
-      { duplicate && <p>Contact already exists</p>}
+      <h2>Contacts { duplicate && "- duplicated contact" }</h2>
 
       <div className='content__wrapper'>
 
