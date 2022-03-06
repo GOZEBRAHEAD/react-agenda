@@ -6,7 +6,7 @@ export const saveContactsInLocalStorage = (cont) => {
 }
 
 export const getContactsFromLocalStorage = () => {
-  return JSON.parse(localStorage.getItem(LS_CONTACTS));
+  return JSON.parse(localStorage.getItem(LS_CONTACTS)) || [];
 }
 
 export const saveAppointmentsInLocalStorage = (appoint) => {
@@ -14,5 +14,5 @@ export const saveAppointmentsInLocalStorage = (appoint) => {
 }
 
 export const getAppointmentsFromLocalStorage = () => {
-  return JSON.parse(localStorage.getItem(LS_APPOINTMENTS));
+  return JSON.parse(localStorage.getItem(LS_APPOINTMENTS)) || [];
 }

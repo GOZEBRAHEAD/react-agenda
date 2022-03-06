@@ -15,10 +15,14 @@ import Appointment from './components/Appointment/Appointment';
 
 import './App.css';
 
+import { ReactComponent as SVG_GITHUB } from './assets/img/github_icon.svg';
+import { ReactComponent as SVG_INSTAGRAM } from './assets/img/instagram_icon.svg';
+import { ReactComponent as SVG_LINKEDIN } from './assets/img/linkedin_icon.svg';
+
 function App() {
 
-  const [contacts, setContacts] = useState(getContactsFromLocalStorage() || []);
-  const [appointments, setAppointments] = useState(getAppointmentsFromLocalStorage() || []);
+  const [contacts, setContacts] = useState(getContactsFromLocalStorage());
+  const [appointments, setAppointments] = useState(getAppointmentsFromLocalStorage());
 
   useEffect(() => {
 
@@ -58,9 +62,25 @@ function App() {
           <Switch>
 
             <Route exact path='/'>
-              <h1>Welcome to the agenda!</h1>
-              <h4>Made by Luciano Nieves</h4>
-              <p>Check it out adding some contacts or appointments :)</p>
+              <div className='content__hero'>
+
+                <h1>Welcome to the agenda!</h1>
+                <h4>Made by Luciano Nieves</h4>
+                <p>Check it out adding some contacts or appointments :)</p>
+
+                <div className='hero__socials'>
+                  <a href="https://github.com/GOZEBRAHEAD" aria-label="GitHub" target="_blank" rel="noreferrer">
+                    <SVG_GITHUB />
+                  </a>
+                  <a href="https://www.linkedin.com/in/luciano-nieves/" aria-label="LinkedIn" target="_blank" rel="noreferrer">
+                    <SVG_LINKEDIN />
+                  </a>
+                  <a href="https://www.instagram.com/lucho_nieves/" aria-label="Instagram" target="_blank" rel="noreferrer">
+                    <SVG_INSTAGRAM />
+                  </a>
+                </div>
+
+              </div>
             </Route>
 
             <Route path='/contacts/:id'>

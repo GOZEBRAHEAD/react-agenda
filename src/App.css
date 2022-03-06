@@ -32,6 +32,43 @@
   flex-direction: column;
 }
 
+.content__hero {
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content__hero h1 {
+  margin-bottom: 3rem;
+}
+
+.hero__socials {
+  height: 5rem;
+  width: 50%;
+  min-width: 12rem;
+
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.hero__socials a {
+  color: #8C71D2;
+  transition: all 0.15s linear;
+}
+
+.hero__socials a:hover {
+  color: #4B2F94;
+}
+
+.hero__socials a svg {
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
 .layout__content h2 {
   height: 3rem;
 }
@@ -96,4 +133,17 @@
 
 .info__card:hover {
   box-shadow: 3px 3px 1px #3f277a;
+}
+
+@media only screen and (max-width: 700px) {
+
+  .content__wrapper {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .content__see-contacts,
+  .content__see-appointments {
+    min-width: 100%;
+  }
 }
