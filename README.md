@@ -8,6 +8,7 @@ Made with:
 - ReactJS
 - React router v5.2.0
 - BEM methodologies for CSS classes.
+- LocalStorage for contacts and appointments.
 
 ## Live Demo
 
